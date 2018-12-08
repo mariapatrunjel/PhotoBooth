@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">PhotoBooth</string>
+    <string name="welcome_to">Welcome To</string>
+    <string name="photo_booth">Photo Booth</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="i_don_t_have_an_account">I don\'t have an account !!</string>
+    <string name="email">email</string>
+    <string name="create_account">Create account</string>
+    <string name="register">Register</string>
+    <string name="retype_password">retype password</string>
+    <string name="enter_email_for_your_account">Enter email for your account</string>
+    <string name="send_email">Send email</string>
+    <string name="title_activity_my_profile">MyProfileActivity</string>
+    <string name="i_forgot_my_password">I forgot my password !!</string>
+    <string name="new_post">Add New Post</string>
+    <string name="log_out">Log Out</string>
+    <string name="status">Status</string>
+    <string name="description">Description</string>
+    <string name="add_post">Add Post</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="my_profile">My Profile</string>
+    <string name="save">Save</string>
+</resources>
