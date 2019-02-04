@@ -57,6 +57,8 @@ public class LoginActivity extends Activity {
             String email = mEmailField.getText().toString();
             String password = mPasswordField.getText().toString();
 
+//            email = "george2mircea@gmail.com";
+//            password = "gxg123";
             Log.d(TAG, "signIn:" + email);
             if (!validateForm()) {
                 return;

@@ -14,6 +14,8 @@ public class Post {
     private String author;
     private Uri photoUrl;
 
+    private String image;
+
     public Post() {
     }
 
@@ -75,4 +77,9 @@ public class Post {
     public void setPhotoUrl(Uri photoUrl) {
         this.photoUrl = photoUrl;
     }
+
+    public String getImage() {return image;}
+
+    public void setImage(String image) {this.image=image;}
+
 }
