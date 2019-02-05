@@ -3,6 +3,7 @@ package lgm.photobooth;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
@@ -12,14 +13,11 @@ public class Post {
     private String userId;
     private String status;
     private String author;
-    private Uri photoUrl;
+    private String photoUrl;
 
     private String image;
 
-    public Post() {
-    }
-
-    public Post(String userId, String author, String status, Uri photoUrl) {
+    public Post(String userId, String author, String status, String photoUrl) {
         this.userId = userId;
         this.status = status;
         this.author = author;
@@ -32,7 +30,7 @@ public class Post {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", userId);
         result.put("status",status);
-        result.put("photo",photoUrl.toString());
+        result.put("photo",photoUrl);
         result.put("author",author);
         return result;
     }
@@ -41,7 +39,7 @@ public class Post {
     public Map<String, Object> toMapWithoutUserId() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("status",status);
-        result.put("photo",photoUrl.toString());
+        result.put("photo",photoUrl);
         result.put("author",author);
         return result;
     }
@@ -70,11 +68,11 @@ public class Post {
         this.author = author;
     }
 
-    public Uri getPhotoUrl() {
+    public String getPhotoUrl() {
         return photoUrl;
     }
 
-    public void setPhotoUrl(Uri photoUrl) {
+    public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
 

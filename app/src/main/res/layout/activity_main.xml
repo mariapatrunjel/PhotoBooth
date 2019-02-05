@@ -14,6 +14,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/buttonImp"
         android:onClick="onClickMyProfileButton"
         android:text="My Profile"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,6 +26,7 @@
 
     <Button
         android:id="@+id/logoutButton"
+        android:background="@color/buttonImp"
         android:layout_width="129dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -42,6 +44,7 @@
 
     <Button
         android:id="@+id/newPostButton"
+        android:background="@color/buttonImp"
         android:layout_width="129dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -53,22 +56,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-    
+
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/row"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="379dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:cardBackgroundColor="#fff"
         app:cardCornerRadius="3dp"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myProfileButton">
@@ -90,7 +91,7 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="295dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/loading_image"
                 android:scaleType="centerCrop" />
@@ -107,13 +108,14 @@
 
     <Button
         android:id="@+id/previous"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="90dp"
+        android:layout_height="35dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
-        android:text="Previous"
+        android:layout_marginBottom="8dp"
+        android:background="@color/button"
         android:onClick="onClickPreviousPicture"
+        android:text="Previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/row"
@@ -121,14 +123,15 @@
 
     <Button
         android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="90dp"
+        android:layout_height="35dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Next"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/button"
         android:onClick="onClickNextPicture"
+        android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.715"

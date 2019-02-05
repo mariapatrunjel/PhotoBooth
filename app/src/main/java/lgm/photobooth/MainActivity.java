@@ -66,8 +66,7 @@ public class MainActivity extends Activity {
                     if(el.child("photo").getValue()!=null)
                         photo=el.child("photo").getValue().toString();
 
-                    Uri url=Uri.parse(photo);
-                    Post post=new Post(el.getValue().toString(), author, status, url);
+                    Post post=new Post(el.getValue().toString(), author, status, photo);
                     post.setImage(photo);
                     mPosts.add(post);
                 }

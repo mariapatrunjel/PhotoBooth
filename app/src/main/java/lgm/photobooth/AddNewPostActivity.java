@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import com.google.android.gms.tasks.OnSuccessListener;
+
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -64,42 +68,55 @@ public class AddNewPostActivity extends Activity {
             return;
         }
 
-        StorageReference filepath = mStorage.child("post_images").child(uri.getLastPathSegment());
-        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+        final StorageReference ref = mStorage.child("post_images").child(uri.getLastPathSegment());
+        ref.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                @SuppressWarnings("VisibleForTests")
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return ref.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    final String downloadUrl = downloadUri.toString();
+                    final DatabaseReference newPostRef = mDatabase.child("posts").push();
+                    final DatabaseReference newUserPostRef =mDatabase.child("user-posts").child(mLoggedUser.getUid()).child(newPostRef.getKey());
 
-                //getting the post image download url
-                final Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+                    mDatabaseUser.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String username = dataSnapshot.child("username").getValue().toString();
+                            Post newPost = new Post(mLoggedUser.getUid(),username,status,downloadUrl);
+                            newPostRef.updateChildren(newPost.toMap());
+                            newUserPostRef.updateChildren(newPost.toMapWithoutUserId());
 
-                final DatabaseReference newPostRef = mDatabase.child("posts").push();
-                final DatabaseReference newUserPostRef =mDatabase.child("user-posts").child(mLoggedUser.getUid()).child(newPostRef.getKey());
+                            uri = null;
+                            mImageButton.setImageURI(uri);
+                            mImageButton.setImageResource(R.drawable.img);
+                            mStatusField.setText("");
 
-                mDatabaseUser.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String username = dataSnapshot.child("username").getValue().toString();
-                        Post newPost = new Post(mLoggedUser.getUid(),username,status,downloadUrl);
-                        newPostRef.updateChildren(newPost.toMap());
-                        newUserPostRef.updateChildren(newPost.toMapWithoutUserId());
+                            Toast.makeText(AddNewPostActivity.this, "Post made successfully",
+                                    Toast.LENGTH_SHORT).show();
 
-                        uri = null;
-                        mImageButton.setImageURI(uri);
-                        mImageButton.setImageResource(R.drawable.img);
-                        mStatusField.setText("");
+                        }
 
-                        Toast.makeText(AddNewPostActivity.this, "Post made successfully",
-                                Toast.LENGTH_SHORT).show();
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(AddNewPostActivity.this, "Can't upload post",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(AddNewPostActivity.this, "Can't upload post",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    // Handle failures
+                    // ...
+                    Toast.makeText(AddNewPostActivity.this, "Can't upload post",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
